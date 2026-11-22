@@ -353,36 +353,11 @@ export function generateForensicReportHtml(data: EmailAnalysisResponse, generate
         </div>
       </div>` : ''}
 
-      ${fusion?.risk_score_breakdown ? `
-      <div style="margin-bottom: 16px;">
-        <div class="card-title">Evidence Category Breakdown (0 - 100 Points)</div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-          <div class="card">
-            <div class="card-title">Sender &amp; Auth (Max 25)</div>
-            <div class="card-val">${fusion.risk_score_breakdown.sender_auth.score} <span style="font-size: 11px; color: var(--text-muted);">/ 25</span></div>
-            <div class="card-sub">${escapeHtml(fusion.risk_score_breakdown.sender_auth.explanation)}</div>
-          </div>
-          <div class="card">
-            <div class="card-title">URL Intelligence (Max 25)</div>
-            <div class="card-val">${fusion.risk_score_breakdown.url_intelligence.score} <span style="font-size: 11px; color: var(--text-muted);">/ 25</span></div>
-            <div class="card-sub">${escapeHtml(fusion.risk_score_breakdown.url_intelligence.explanation)}</div>
-          </div>
-          <div class="card">
-            <div class="card-title">Content &amp; Language (Max 20)</div>
-            <div class="card-val">${fusion.risk_score_breakdown.content_language.score} <span style="font-size: 11px; color: var(--text-muted);">/ 20</span></div>
-            <div class="card-sub">${escapeHtml(fusion.risk_score_breakdown.content_language.explanation)}</div>
-          </div>
-          <div class="card">
-            <div class="card-title">DistilBERT NLP (Max 20)${fusion.risk_score_breakdown.ml_model.is_dampened ? ' <span style="color: var(--emerald);">[Dampened]</span>' : ''}</div>
-            <div class="card-val">${fusion.risk_score_breakdown.ml_model.score} <span style="font-size: 11px; color: var(--text-muted);">/ 20</span></div>
-            <div class="card-sub">${escapeHtml(fusion.risk_score_breakdown.ml_model.explanation)}</div>
-          </div>
-          <div class="card">
-            <div class="card-title">Header &amp; IP (Max 10)</div>
-            <div class="card-val">${fusion.risk_score_breakdown.header_ip.score} <span style="font-size: 11px; color: var(--text-muted);">/ 10</span></div>
-            <div class="card-sub">${escapeHtml(fusion.risk_score_breakdown.header_ip.explanation)}</div>
-          </div>
-        </div>
+      ${(fusion?.risk_score_breakdown?.floor_adjustment ?? 0) > 0 ? `
+      <div class="card" style="margin-bottom: 16px; border-color: rgba(239, 68, 68, 0.4);">
+        <div class="card-title" style="color: #f87171;">Safety-Floor Adjustment: +${fusion?.risk_score_breakdown?.floor_adjustment}</div>
+        <div class="card-sub">${escapeHtml(fusion?.risk_score_breakdown?.floor_adjustment_reason ?? 'A minimum-risk floor was applied because of a severe indicator.')}</div>
+        <div class="card-sub">${fusion?.risk_score_breakdown?.category_sum ?? 0} (category points) + ${fusion?.risk_score_breakdown?.floor_adjustment} (floor) = ${fusion?.overall_risk_score}/100</div>
       </div>` : ''}
 
       ${(fusion?.positive_evidence?.length || fusion?.negative_evidence?.length) ? `

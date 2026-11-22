@@ -1,0 +1,31 @@
+From: newsletter@updates.tech
+To: subscriber@workplace.com
+Cc: archive@workplace.com
+Subject: Tech Digest #89
+Date: Fri, 01 Oct 2026 14:30:00 +0000
+Message-ID: <digest-89@updates.tech>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="===============digest_bound_12345=="
+
+--===============digest_bound_12345==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Welcome to Tech Digest #89!
+
+Read our in-depth story at: https://updates.tech/articles/ai-security
+Unsubscribe: https://updates.tech/unsubscribe?id=sub123
+
+--===============digest_bound_12345==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Welcome to Tech Digest #89!</h1>
+  <p>Read our in-depth story at <a href="https://updates.tech/articles/ai-security">AI Security Review</a>.</p>
+  <p><a href="https://updates.tech/unsubscribe?id=sub123">Click here to unsubscribe</a></p>
+</body>
+</html>
+--===============digest_bound_12345==--

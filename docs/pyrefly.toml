@@ -1,0 +1,12 @@
+
+# PhishIntel Pyrefly configuration
+
+project-includes = ["backend/**/*.py"]
+
+search-path = ["backend"]
+
+python-interpreter-path = "D:/python/python.exe"
+
+site-packages-path = [
+    "D:/python/Lib/site-packages"
+]

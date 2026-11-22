@@ -1,0 +1,41 @@
+From: billing@vendor-services.com
+To: accounts@client-firm.com
+Subject: Invoice INV-2026-9081 Attached
+Date: Thu, 30 Sep 2026 11:15:20 +0000
+Message-ID: <billing-inv-9081@vendor-services.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="BOUNDARY_MIXED_4455"
+
+--BOUNDARY_MIXED_4455
+Content-Type: text/plain; charset="utf-8"
+
+Dear Client,
+
+Please find attached your invoice INV-2026-9081 for services rendered in September 2026.
+Payment is due within 30 days.
+
+Kind regards,
+Billing Operations
+
+--BOUNDARY_MIXED_4455
+Content-Type: application/pdf
+Content-Disposition: attachment; filename="invoice_october.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKJcTl8uXrCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+
+CmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+
+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKPj4KZW5kb2JqCnhy
+ZWYKMCA0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAxNSAwMDAwMCBuIAowMDAwMDAwMDY4
+IDAwMDAwIG4gCjAwMDAwMDAxMjUgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSA0Ci9Sb290IDEg
+MCBSCj4+CnN0YXJ0eHJlZgoxNzYKeyVFT0Y=
+
+--BOUNDARY_MIXED_4455
+Content-Type: text/plain
+Content-Disposition: attachment; filename="payment_instructions.txt"
+Content-Transfer-Encoding: 7bit
+
+Wire Transfer Instructions:
+Bank: Global Trust Bank
+Routing: 123456789
+Account: 9876543210
+--BOUNDARY_MIXED_4455--

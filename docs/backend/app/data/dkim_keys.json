@@ -1,0 +1,4 @@
+{
+    "_comment":  "Pinned DKIM public keys (offline trust store). Format: \"selector._domainkey.domain\": \"\u003cexact DNS TXT record\u003e\". Collect once while online, e.g. nslookup -type=TXT lnkd._domainkey.em.linkedin.com. Nothing is fetched at runtime.",
+    "lnkd._domainkey.em.linkedin.com":  "v=DKIM1; k=rsa;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqlbtxrY0zeqg28ixF2FywhZKfUAUqz6AcjORruSWIYF/K2NBeywdOrXt93EDtAb1Wl1DiEiOWZonb+kpJyGYMbteBJEKYOFlNkfM0rV6FAo2ZAoIEN+AAdZWVaap6r2+t3lAZNSMCztDa2ZqJziWm2kFEjbZeH1CyvZv1c5nHSipgn4W9yhf9q5Zn9+MB4I4nhponpxppoRIvkUx6ZHOC6TvNEfkgqX2y0wg3Sv8WWgPDEkVhyT2I/2C0Z8JOovHZsalN3FtIKDFIU7zP9ppYeslxWp8bWY4o+PX4v18wNKfkpy/LtUZCjEkTGfUa61BVKllzmplrRGZqPZevb8SIQIDAQAB"
+}

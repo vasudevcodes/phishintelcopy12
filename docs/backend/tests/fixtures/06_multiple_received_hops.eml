@@ -1,0 +1,35 @@
+Received: from mail-relay.partner.com (mail-relay.partner.com [198.51.100.25])
+ by mx.google.com with ESMTPS id abc123xyz
+ for <investigator@phishintel.local>;
+ Sun, 04 Oct 2026 10:14:02 -0700 (PDT)
+Received: from gateway.internal.net (gateway.internal.net [10.240.0.5])
+ by mail-relay.partner.com with ESMTP id def456uvw;
+ Sun, 04 Oct 2026 10:13:58 -0700 (PDT)
+Received: from app-srv.local ([127.0.0.1])
+ by gateway.internal.net with SMTP id ghi789rst;
+ Sun, 04 Oct 2026 10:13:50 -0700 (PDT)
+Received: from [2001:db8:85a3::8a2e:370:7334] (HELO origin.ipv6.net)
+ by app-srv.local with ESMTP id jkl012opq;
+ Sun, 04 Oct 2026 10:13:45 -0700 (PDT)
+Authentication-Results: mx.google.com;
+ dkim=pass header.i=@partner.com header.s=202601;
+ spf=pass (google.com: domain of sender@partner.com designates 198.51.100.25 as permitted sender) smtp.mailfrom=sender@partner.com;
+ dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=partner.com
+Received-SPF: pass (google.com: domain of sender@partner.com designates 198.51.100.25 as permitted sender) client-ip=198.51.100.25;
+Return-Path: <sender@partner.com>
+From: Chief Security Officer <sender@partner.com>
+To: Incident Response Team <investigator@phishintel.local>
+Reply-To: security-ops@partner.com
+Subject: High Severity Incident Notification #332
+Date: Sun, 04 Oct 2026 17:13:40 +0000
+Message-ID: <inc-332-9988@partner.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+Forensic teams,
+
+Please inspect the IP transit trace headers for this transmitted sample.
+All four Received headers must be preserved in order.
+
+Regards,
+CSO Operations

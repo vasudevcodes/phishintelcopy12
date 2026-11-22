@@ -46,6 +46,14 @@ async def system_status():
     return {"online_authentication": settings.ONLINE_AUTH_ENABLED}
 
 
+@app.get("/health/model", tags=["System"])
+async def model_health():
+    """Diagnostic: is PyTorch/transformers importable and is the DistilBERT checkpoint present?"""
+    from app.services.model_inference import get_model_inference_engine
+
+    return get_model_inference_engine().diagnostics()
+
+
 @app.get("/health/dns", tags=["System"])
 async def dns_health():
     """Diagnostic: can this server perform the live DNS lookups needed for SPF/DKIM/DMARC?"""

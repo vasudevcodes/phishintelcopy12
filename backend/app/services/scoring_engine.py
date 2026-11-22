@@ -886,19 +886,28 @@ def calculate_phishing_risk_score(
         critical_reasons.append("Explicit authentication failure corroborated by high phishing text similarity")
 
     final_score = raw_sum
+    floor_reasons: List[str] = []
     if is_critical_threat and final_score < 75:
         final_score = 75
+        floor_reasons.append("Critical-threat floor (minimum 75): " + "; ".join(critical_reasons))
 
     # Floor for auth failures / conflicts (must not evaluate to LOW_RISK_INDICATORS)
     has_auth_conflict = "RULE_AUTH_CONTRADICTORY_HEADERS" in rules1
     if (has_auth_fail or has_auth_conflict) and final_score < 30:
         final_score = 30
+        floor_reasons.append("Authentication failure/conflict floor (minimum 30)")
 
     # Model inference error floor
     if model_inference and model_inference.status == ModelInferenceStatus.ERROR and final_score < 30:
         final_score = 30
+        floor_reasons.append("Model inference error floor (minimum 30)")
 
     final_score = min(100, max(0, final_score))
+
+    # The displayed total must equal the visible category points plus an explicit floor adjustment,
+    # so the five category scores and the overall score always reconcile.
+    floor_adjustment = max(0, final_score - raw_sum)
+    floor_reason = "; ".join(floor_reasons) if floor_adjustment > 0 and floor_reasons else None
 
     # 5. Determine Completeness
     completeness_status, completeness_detail = determine_evidence_completeness(
@@ -966,6 +975,9 @@ def calculate_phishing_risk_score(
             rules_triggered=rules5,
             is_dampened=False,
         ),
+        category_sum=raw_sum,
+        floor_adjustment=floor_adjustment,
+        floor_adjustment_reason=floor_reason,
     )
 
     all_pos = pos1 + pos2 + pos3 + pos4 + pos5

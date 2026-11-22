@@ -522,7 +522,13 @@ def fuse_evidence(
         (
             f"Category contributions: Sender/Auth {breakdown.sender_auth.score}/25, "
             f"URLs {breakdown.url_intelligence.score}/25, Content/Language {breakdown.content_language.score}/20, "
-            f"ML Model {breakdown.ml_model.score}/20, Header/IP {breakdown.header_ip.score}/10."
+            f"ML Model {breakdown.ml_model.score}/20, Header/IP {breakdown.header_ip.score}/10"
+            + (
+                f" = {breakdown.category_sum}, plus safety-floor adjustment +{breakdown.floor_adjustment} "
+                f"= {overall_score}."
+                if breakdown.floor_adjustment > 0
+                else f" = {overall_score}."
+            )
         ),
     ]
     if neg_evidence:

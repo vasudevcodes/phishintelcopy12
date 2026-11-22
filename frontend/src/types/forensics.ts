@@ -459,6 +459,11 @@ export interface CategoryScoresBreakdown {
   content_language: CategoryScoreDetail;
   ml_model: CategoryScoreDetail;
   header_ip: CategoryScoreDetail;
+  /** Sum of the five category scores before any safety floor. */
+  category_sum?: number;
+  /** Points added by a safety floor; category_sum + floor_adjustment === overall_risk_score. */
+  floor_adjustment?: number;
+  floor_adjustment_reason?: string | null;
 }
 
 export interface EvidenceFusionResult {

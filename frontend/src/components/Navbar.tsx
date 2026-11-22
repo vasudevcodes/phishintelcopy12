@@ -12,18 +12,32 @@ export const Navbar: FC<NavbarProps> = ({ onBrandClick }) => {
 
   useEffect(() => {
     let cancelled = false;
-    fetch('/api/v1/system/status')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => {
-        if (!cancelled && d && typeof d.online_authentication === 'boolean') {
-          setOnlineAuth(d.online_authentication);
-        }
-      })
-      .catch(() => {
-        /* backend unreachable: keep the offline label */
-      });
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const readFlag = async (url: string): Promise<boolean | null> => {
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        if (!r.ok) return null;
+        const d = await r.json();
+        return typeof d?.online_authentication === 'boolean' ? d.online_authentication : null;
+      } catch {
+        return null; // backend unreachable
+      }
+    };
+
+    // Ask the backend; fall back to /health for older backends without /system/status.
+    // Retry quickly until the backend answers (it may still be starting), then re-check slowly.
+    const check = async () => {
+      const flag = (await readFlag('/api/v1/system/status')) ?? (await readFlag('/health'));
+      if (cancelled) return;
+      if (flag !== null) setOnlineAuth(flag);
+      timer = setTimeout(check, flag === null ? 4000 : 30000);
+    };
+
+    check();
     return () => {
       cancelled = true;
+      if (timer) clearTimeout(timer);
     };
   }, []);
 

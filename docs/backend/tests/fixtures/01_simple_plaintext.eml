@@ -1,0 +1,13 @@
+From: alice@sender.com
+To: bob@receiver.com
+Subject: Meeting Reminder
+Date: Mon, 04 Oct 2026 09:00:00 +0000
+Message-ID: <simple123@sender.com>
+Content-Type: text/plain; charset="utf-8"
+
+Hi Bob,
+
+This is a reminder for our project sync meeting today at 2 PM.
+
+Best regards,
+Alice

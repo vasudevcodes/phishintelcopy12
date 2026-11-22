@@ -1,0 +1,702 @@
+Delivered-To: vasudev.codes@gmail.com
+Received: by 2002:a05:6022:5675:b0:118:3ef2:d511 with SMTP id er21csp6710307lab;
+        Wed, 21 Oct 2026 07:14:29 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6b18:b0:3e2:200b:dc1f with SMTP id adf61e73a8af0-3e287f3fd67mr1616765637.74.1792592069421;
+        Wed, 21 Oct 2026 07:14:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792592069; cv=none;
+        d=google.com; s=arc-20260327;
+        b=UEXkyNB22M9SiVD1f11+U2r9I9jFbx5BJNZlmtQLJ5+n65vzD41miKkta0FEj2VWnO
+         /BkbqA1Fd8GwBOhwyW59KuCvVfU6yX5AxBTap8T3m46RVJfM6tDKWWu/Wsqv150xNZxe
+         J7+ZAl8u1ggJV0z1I7qLmV6b6P+axoHxh10I7suLIYJQQ8tMBdP2VPKmLpe0q7z2SLWT
+         oGBtEGA0GIym6ywSyNSVEIK2dIoajL+IYnqjA+AMPmP5LrAIJ6yov6/3WAToRwU47eAO
+         +Nw4km1IdotasCGT/Zj+glXDA0o08Wk5HFKQkCxwGaJw+F3W3udaFzJnkYGjnXdfohmX
+         zqxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:list-unsubscribe-post:list-unsubscribe
+         :message-id:mime-version:reply-to:to:date:subject:from
+         :dkim-signature;
+        bh=S4aBPBI93w6FMxomMvCHlKpzBbRx0zOTUnzxJbJFudQ=;
+        fh=9xq8mFyCAW1+qKJp9ZLeGxsnoaTtqte55u0BnE8al4o=;
+        b=VuZX1/J5wgtGsjflWM15piGmsHMpJv29zmhznIbyMSn8Yc442DN+98I9zaBdE/Rw5n
+         8rewFX4jrbimAUuCnOhYABoDSvUM+HZzNwvTcv/QtowqCOmoIMRpdpr1+dJBMoA9E57o
+         1nWAOnY/N2HMLl4j2kibaYNjGZkURhOywSlwk4aHKHAA9d9pm++qWbmaKJ4gZFkdsahc
+         GWLZwrtzr3AFgi4hvbbwO5aaYbMd6tQkE7GPXD6spU1CO8BW0woR6GV2OByxOXuMZVhY
+         e3E7aPv18uGmepJPbf5vsoukz4YACMQ5nDMwBZC78ZiIWc30WRaHXru6gAnRQJx3oVxL
+         KYiw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@em.linkedin.com header.s=lnkd header.b=fyVW4yb6;
+       spf=pass (google.com: domain of bounce@em.linkedin.com designates 130.248.165.113 as permitted sender) smtp.mailfrom=bounce@em.linkedin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+Return-Path: <bounce@em.linkedin.com>
+Received: from r113.em.linkedin.com (r113.em.linkedin.com. [130.248.165.113])
+        by mx.google.com with ESMTPS id 41be03b00d2f7-cd6b8635e29si91127a12.261.2026.10.21.07.14.29
+        for <vasudev.codes@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 07:14:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce@em.linkedin.com designates 130.248.165.113 as permitted sender) client-ip=130.248.165.113;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@em.linkedin.com header.s=lnkd header.b=fyVW4yb6;
+       spf=pass (google.com: domain of bounce@em.linkedin.com designates 130.248.165.113 as permitted sender) smtp.mailfrom=bounce@em.linkedin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoidmFzdWRldi5jb2Rlc0BnbWFpbC5jb20ifQ==
+DKIM-Signature: v=1; a=rsa-sha256; d=em.linkedin.com; s=lnkd; c=relaxed/relaxed;
+	bh=S4aBPBI93w6FMxomMvCHlKpzBbRx0zOTUnzxJbJFudQ=;
+	h=from:to:message-id:date:subject:content-type:mime-version:
+		list-unsubscribe:list-unsubscribe-post; t=1792592068;
+	b=fyVW4yb61PSKRJmkhFEGdgAnfb46TLmWFWUHU6iNVi42DzqvEQFsgoPUxAeUql3HkeDW08llO
+	3yvjofOepz43RAH28VPK029pWptAE6BdxiSnowVUfXAo3oi5G9AH6QaD2lvQ9DVz4DEMPiUBYSU
+	yATED82ZGsvnN3ryyz3qGgFOafb9z3zTb1Qk/qyCgLZwQsUfu1cUozTksXewhBfOZ3m+chUtbCo
+	tk6/pmMC+F1q0xiyFf/BLTdNDeBQmftwsTY5Z5K80vFLIH+F0MENqIFItpkp31/YORsvC+Z4C6c
+	EWQ8Rqq8+OF0pV3eDYxx9zD3NKyAuOq0852kb7oa/X+g==;
+Received: from r113.em.linkedin.com (10.1.1.247) by or2-prod1-kumo-mta-B-i-04eb3f4c609219da6 (KumoMTA 10.246.45.59) with ESMTP id ba5d2e68cd5911f1a2a102ffddb45daf for <vasudev.codes@gmail.com>; Wed, 21 Oct 2026 14:14:28 +0000
+From: "LinkedIn" <linkedin@em.linkedin.com>
+Subject: Complete your profile
+Date: Wed, 21 Oct 2026 07:14:28 -0700
+To: <vasudev.codes@gmail.com>
+Reply-To: "LinkedIn" <donotreply@em.linkedin.com>
+MIME-Version: 1.0
+X-mailer: nlserver, Build 8.9.3
+Message-ID: <NMFFDA668d16bc-1fbc-479d-b32a-602ed5574986006C5B7Flnkd_mid_prod2@em.linkedin.com>
+List-Unsubscribe: <https://www.linkedin.com/mysettings-api/settingsApiEmailSubscriptionPost?loid=AQHq8Si1zpF52wAAAaC4icB-fZV_qeQT1XMwruFqzBIP2tIYTE3uVZ071pD5OH-ZOBC_uVV0oIISqpVBYPIU&eid=eml-adobe-unsub%3ACAMPAIGNID%3Alinkedin.11816442%3BLAUNCHID%3A11926362%3BLAUNCHDATE%3A2026-10-21>, <mailto:bounce@em.linkedin.com?subject=unsubscribe%3CNMFFDA668d16bc-1fbc-479d-b32a-602ed5574986006C5B7Flnkd_mid_prod2@em.linkedin.com%3E>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Content-Type: text/html;
+	charset="windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.=
+org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang=3D"en" style=3D"width: 100%;" xml:lang=3D"en" xmlns=3D"http://ww=
+w.w3.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xm=
+lns:v=3D"urn:schemas-microsoft-com:vml">
+<head>
+   <meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type"=
+ />
+   <meta content=3D"width=3Ddevice-width; initial-scale=3D1.0; maximum-scal=
+e=3D1.0; user-scalable=3Dno;" name=3D"viewport" />
+   <meta content=3D"width=3Ddevice-width" name=3D"viewport" />
+   <meta content=3D"noindex, no follow" name=3D"robots" />
+   <meta name=3D"x-apple-disable-message-reformatting" />
+   <title>LinkedIn</title>
+   <style type=3D"text/css">.ExternalClass { width:100%; }
+=2EExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass fon=
+t, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+table td p { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; padding: 0; margin: 0; color: =
+black; line-height: 100%; }
+=2Eapplelinks a { text-decoration: none; color: inherit !important; }
+a { color: black; text-decoration: none; }
+a, a:link, a:visited { color: inherit; text-decoration: none; }
+span.MsoHyperlink { mso-style-priority: 99; color: inherit; }
+span.MsoHyperlinkFollowed { mso-style-priority: 99; color: inherit; }
+img { border: 0px !important; }
+
+body { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; -webkit-t=
+ext-size-adjust: none; -ms-text-size-adjust: none; -webkit-font-smoothing: =
+antialiased; margin: 0; padding: 0; width: 100% !important; }
+
+=2Elinkopacity:hover { opacity: 0.8 !important; }
+
+=2Ebutton { -webkit-border-radius: 50px; -moz-border-radius: 50px; border-r=
+adius: 50px; overflow: hidden; }
+
+
+@media only screen and (max-width: 480px) {
+=2Ew100m, .column50, .column33, .column25, .column75, .column66 { width: 10=
+0% !important; }
+=2Ew90m { width: 90% !important;}
+=2Eexpandm { width: 100% !important; display: block !important; }
+=2Eresizem { width: 100% !important; height: auto !important; }
+=2Ehidem { display: none !important; }
+=2Eh1m { font-size: 22px !important;}
+=2Eh2m { font-size: 15px !important;}
+=2Eh3m { font-size: 13px !important;}
+=2Etcenterm { text-align: center !important; }
+=2Etleftm { text-align: left !important; }
+=2Etrightm { text-align: right !important; }
+=2Eheight0m { height: 0 !important; }
+=2Eshowm { display: block !important; max-height: 1000px !important; width:=
+ 100% !important; overflow: visible !important; align: center !important; }=
+  
+
+=2Elogo { width: 150px !important; height: auto !important; }  
+
+=2Eborder0m { border: 0px !important; }
+=2Eborderlr0m { border-left: 0px !important; border-right: 0px !important; =
+}  
+=2Epad0m { padding: 0px !important; }
+=2Epadlr0m { padding-left: 0px !important; padding-right: 0px !important; }=
+  
+=2Epadt0m { padding-top: 0px !important; }
+=2Epadt5m { padding-top: 5px !important; }
+=2Epadt10m { padding-top: 10px !important; }
+=2Epadt20m { padding-top: 20px !important; }
+=2Epadt30m { padding-top: 30px !important; }
+=2Epadb0m { padding-bottom: 0px !important;}
+=2Epadb5m { padding-bottom: 5px !important;}
+=2Epadb10m { padding-bottom: 10px !important;}
+=2Epadb20m { padding-bottom: 20px !important;}
+=2Epadb30m { padding-bottom: 30px !important;}
+}
+
+@media only screen and (max-width: 512px) {
+=2Eow100 { width: 100% !important; }
+=2Ew100 { width: 100% !important; }
+=2Ew90 { width: 90% !important; }
+=2Ehide { display: none !important; }
+=2Eresize { width: 100% !important; height: auto !important; }
+=2Eresize img { max-width: 100% !important; height: auto !important; }
+=2Eresize a { width: auto !important; height: auto !important; }
+=2Eexpand { width: 100% !important; display: block !important; }
+=2Eheight0 { height: 0 !important; }
+=2Ecolumn50 { width: 50%; }
+=2Ecolumn50a { width: 50%; }
+=2Ecolumn33 { width: 33.33%; }
+=2Ecolumn25 { width: 25%; }
+=2Ecolumn75 { width: 75%; }
+=2Ecolumn66 { width: 66%; }
+=2Etcenter { text-align: center !important; }
+=2Eshow { display: block !important; max-height: 1000px !important; width: =
+100% !important; overflow: visible !important; align: center !important; }
+
+=2Ebannerside { padding-top: 105px !important; }
+
+=2Eborder0 { border: 0px !important; }
+=2Eborderlr0 { border-left: 0px !important; border-right: 0px !important; }=
+  
+=2Epad0 { padding: 0px !important; }
+=2Epadlr0 { padding-left: 0px !important; padding-right: 0px !important; } =
+ 
+=2Epadt0 { padding-top: 0px !important; }
+=2Epadt5 { padding-top: 5px !important; }
+=2Epadt10 { padding-top: 10px !important; }
+=2Epadt20 { padding-top: 20px !important; }
+=2Epadt30 { padding-top: 30px !important; }
+=2Epadb0 { padding-bottom: 0px !important; }
+=2Epadb5 { padding-bottom: 5px !important; }
+=2Epadb10 { padding-bottom: 10px !important; }
+=2Epadb20 { padding-bottom: 20px !important; }
+=2Epadb30 { padding-bottom: 30px !important; }
+}
+   </style>
+   <!--[if mso>
+<style type=3D"text/css">
+body { margin: 0 !important; padding: 0 !important; font-family: Segoe UI, =
+Arial, sans-serif; }
+table, td, div, p { font-family: Segoe UI, Arial, sans-serif; line-height: =
+normal; }
+</style>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif-->
+</head>
+<body class=3D"tli" data-gr-ext-installed=3D"" data-new-gr-c-s-check-loaded=
+=3D"14.1062.0" data-new-gr-c-s-loaded=3D"14.1102.0" style=3D"-webkit-text-s=
+ize-adjust: none;-ms-text-size-adjust: none; padding: 0; margin: 0; backgro=
+und-color: white;"><!-- HIDDEN PREHEADER START --><!--[if !mso]><!-- -->
+<div style=3D"display: none; font-size: 0; max-height: 0;width: 0; mso-hide=
+: all; overflow: hidden; visibility: hidden;"><span style=3D"display: none;=
+ font-size: 0; max-height: 0;width: 0; mso-hide: all; overflow: hidden; vis=
+ibility: hidden;">Update your job preferences to get better recommendations=
+.</span>
+</div>
+<!-- DO NOT REMOVE preheader spacing below -->
+
+<div style=3D"display: none; max-height: 0px; overflow: hidden;">&nbsp;&zwn=
+j;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbs=
+p;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;&nbsp;&zwnj;&=
+nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp; &zwnj;&nb=
+sp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&nbsp;&zwnj;=
+&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nb=
+sp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;=
+&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nb=
+sp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;=
+&zwnj;&nbsp;
+</div>
+<!--<![endif]--><!-- HIDDEN PREHEADER END -->
+
+
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"width: 100%;" width=3D"100%">
+   <tbody>
+      <tr>
+         <td align=3D"center" style=3D"background-color: #F3F2EF;">
+         <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"w100" role=3D"presentation" width=3D"512">
+            <tbody>
+               <tr>
+                  <td align=3D"center">
+                  <table align=3D"center" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" width=3D"100%"><!-- /// SPACING START=
+ -->
+                     <tbody>
+                        <tr><!-- COPY START -->
+                           <td style=3D"padding-top: 10px; padding-bottom: =
+10px; text-align: center; font-size: 13px; line-height: 1.3em; color: #1919=
+19; font-family: Helvetica Neue, Arial, sans-serif;"></td>
+                           <!-- COPY END -->
+                        </tr>
+                        <!-- SPACING END /// --><!-- /// HEADER START -->
+                        <tr>
+                           <td align=3D"center" class=3D"padt10m" style=3D"=
+background-color: #D7EBCE; padding-top: 16px; padding-bottom: 16px;">
+                           <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"87%">
+                              <tbody>
+                                 <tr><!-- LOGO START -->
+                                    <td align=3D"left" style=3D"padding-rig=
+ht: 12px;" width=3D"100"><a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh6=
+68d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40214&e=3DbWNpZD03NTE2NjE3Nzk0M=
+TY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cmln=
+Z2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1s&s=3Dy8=
+YZ0v2LBA3ydUq5wGbN46rTF3Ad6vPP-eknj5ZD01w" _label=3D"LOGO" _category=3D"CTA=
+" ><img alt=3D"LinkedIn" src=3D"https://res1.em.linkedin.com/res/tracking/8=
+7c9471e22cadfc240562cb29bfc8782c7355d7592944bcc46af662c8a448b61.png" style=
+=3D"width: 100%; max-width: 100px; display: block; border: 0; color: black;=
+ font-size: 20px; font-weight: bold; font-family: sans-serif;" width=3D"100=
+" /></a></td>
+                                    <!-- LOGO END --><!-- NAME/PROFILE STAR=
+T -->
+                                    <td align=3D"right" class=3D"h3m" style=
+=3D"padding-top:3px; font-size: 14px; color: #191919; font-family: Helvetic=
+a Neue, Arial, sans-serif;" valign=3D"top" width=3D"150">
+                  
+                     
+                      <a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh668d=
+16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40216&e=3DbWNpZD03NTE2NjE3Nzk0MTY4=
+Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cmlnZ2V=
+yMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1s&s=3DpWmNS=
+9aHpWpt6Fl-hZ0yREotkpGz3ck4FrmyhxJHjck" _label=3D"PROFILE" _category=3D"CTA=
+" ><img alt=3D"" src=3D"https://media.licdn.com/dms/image/v2/D5603AQGMhjrFD=
+GzRTA/profile-displayphoto-scale_400_400/B56aDZRiYQHEAg-/0/1790351650085=3F=
+e=3D1793836800&v=3Dbeta&t=3DkEhaoyVaSJa7e7PmsbnqniE6inxBr-wU7c7sOf6VP8I" st=
+yle=3D"display:block; border: 0; background-color: #ffffff; -webkit-border-=
+radius: 50%; -moz-border-radius: 50%; border-radius: 50%; overflow: hidden;=
+" width=3D"32" /></a>
+                       
+                  
+                  </td>
+                                    <!-- NAME/PROFILE END -->
+                                 </tr>
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- HEADER END /// --><!-- /// MODULES START - ADD=
+ NEW MODULES BELOW THIS LINE --><!-- /// TEXT CENTER START -->
+                        <tr>
+                           <td align=3D"center" style=3D"background-color: =
+#D7EBCE; padding-top: 16px; padding-bottom: 12px;">
+                           <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"87%"><!-- HEADLINE =
+START -->
+                              <tbody>
+                                 <tr>
+                                    <td style=3D"padding-top: 8px; text-ali=
+gn: center; font-size: 28px; color: #191919; font-family: Helvetica Neue, A=
+rial, sans-serif; font-weight: bold;"><a href=3D"https://t1.em.linkedin.com=
+/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40217&e=3DbWNpZD03=
+NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9=
+ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPW=
+UtZW1s&s=3DV4CLF9stZqHn24MSUberNrAD9UfsNkwyn9ED9efjozU" _label=3D"COMPLETE_=
+YOUR_PROFILE" _category=3D"CTA" style=3D"color: #262626; text-decoration: n=
+one;" >Updating your job preferences adds value to&nbsp;your&nbsp;profile.<=
+/a></td>
+                                 </tr>
+                                 <!-- HEADLINE END --><!-- COPY START --><!=
+-- COPY END --><!-- / PRIMARY CTA START -->
+                                 <tr>
+                                    <td style=3D"padding-top: 20px; padding=
+-bottom: 16px">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation">
+                                       <tbody>
+                                          <tr>
+                                             <td align=3D"center" class=3D"=
+button" style=3D"background-color: #0A66C2; padding: 14px 24px; font-size: =
+16px; color: white; font-family: Helvetica Neue, Arial, sans-serif; text-al=
+ign: center; font-weight: bold;"><a href=3D"https://t1.em.linkedin.com/r/=
+=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40218&e=3DbWNpZD03NTE=
+2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2=
+d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZ=
+W1s&s=3DKlIfY-55e-g-VPy43TfAk6H8Ox2Hqkwc91WALL4c_eE" _label=3D"COMPLETE_YOU=
+R_PROFILE" _category=3D"CTA" style=3D"color: white; text-decoration: none;"=
+ ><span style=3D"display: block; width: 100%;">Complete&nbsp;your&nbsp;prof=
+ile</span></a></td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                                 <!-- PRIMARY CTA END / -->
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- TEXT CENTER END /// --><!-- /// BANNER W/ FULL=
+ BG START -->
+                        <tr>
+                           <td>
+                           <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" width=3D"100%">
+                              <tbody>
+                                 <tr>
+                                    <td align=3D"center" style=3D"backgroun=
+d-color: #ffffff; padding-bottom: 12px;">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><!--=
+ HEADLINE START --><!-- HEADLINE END --><!-- / PRIMARY CTA START --><!-- PR=
+IMARY CTA END / --><!-- 445w IMAGE START -->
+                                       <tbody>
+                                          <tr>
+                                             <td align=3D"center" style=3D"=
+padding-top: 12px;"><a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh668d16=
+bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40219&e=3DbWNpZD03NTE2NjE3Nzk0MTY4Mj=
+c5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cmlnZ2VyM=
+S1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1s&s=3DK0V8xky=
+IX_Cy-Cr1pNxERkzFEE-k6hYEzCNZiIjdfpk" style=3D"color: #262626; text-decorat=
+ion: none;" ><img alt=3D"Updating your job preferences adds value to&nbsp;y=
+our&nbsp;profile." class=3D"resize" src=3D"https://delivery-p143253-e147631=
+9.adobeaemcloud.com/adobe/assets/urn:aaid:aem:2efb637b-72fe-4d2d-8e44-ac8f1=
+1721436/as/26c85bb9d69e2576b6a428a1d117dca1fea3df6ba483a6f873f2c45da4df14ab=
+.png" style=3D"display: block; border: 0; color: black; font-size: 20px; fo=
+nt-weight: bold; font-family: sans-serif; max-width: 100%;" width=3D"445" /=
+></a></td>
+                                          </tr>
+                                          <!-- IMAGE END -->
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- BANNER W/ FULL BG END /// --><!-- /// TEXT CEN=
+TER START -->
+                        <tr>
+                           <td align=3D"center" style=3D"background-color: =
+#ffffff; padding-bottom: 12px;">
+                           <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"87%"><!-- HEADLINE =
+START -->
+                              <tbody>
+                                 <tr>
+                                    <td style=3D"text-align: center; font-s=
+ize: 20px; color: #191919; font-family: Helvetica Neue, Arial, sans-serif; =
+font-weight: bold;">Over 70% of recruiters&nbsp;look for&nbsp;candidates&nb=
+sp;on&nbsp;LinkedIn.</td>
+                                 </tr>
+                                 <!-- HEADLINE END -->
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- TEXT CENTER END /// --><!-- /// BANNER W/ FULL=
+ BG START -->
+                        <tr>
+                           <td>
+                           <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" width=3D"100%">
+                              <tbody>
+                                 <tr>
+                                    <td align=3D"center" style=3D"backgroun=
+d-color: #ffffff; padding-bottom: 12px;">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%"><!--=
+ HEADLINE START --><!-- HEADLINE END --><!-- / PRIMARY CTA START --><!-- PR=
+IMARY CTA END / --><!-- 445w IMAGE START -->
+                                       <tbody>
+                                          <tr>
+                                             <td align=3D"center" style=3D"=
+padding-top: 10px;"><a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh668d16=
+bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021a&e=3DbWNpZD03NTE2NjE3Nzk0MTY4Mj=
+c5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cmlnZ2VyM=
+S1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1s&s=3DvRTRGMp=
+QxGc1TIxaBWLYit-fm4UuepHDSyLsk5a4eiQ" _label=3D"COMPLETE_YOUR_PROFILE" _cat=
+egory=3D"CTA" style=3D"color: #262626; text-decoration: none;" ><img alt=3D=
+"" class=3D"resize" src=3D"https://delivery-p143253-e1476319.adobeaemcloud.=
+com/adobe/assets/urn:aaid:aem:88eb1af3-ceb1-45dd-9d80-6cffebd728cb/as/1880d=
+401deb95cb1514b2b22b80695d7b35ac0f1762c8f140e67e98de000f560.png" style=3D"d=
+isplay: block; border: 0; color: black; font-size: 20px; font-weight: bold;=
+ font-family: sans-serif; max-width: 100%;" width=3D"445" /></a></td>
+                                          </tr>
+                                          <!-- IMAGE END -->
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- BANNER W/ FULL BG END /// --><!-- /// ENTITY L=
+IST START -->
+                        <tr>
+                           <td align=3D"center" style=3D"background-color: =
+#ffffff; padding-bottom: 12px;">
+                           <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"87%"><!-- / ENTITY =
+1 START -->
+                              <tbody>
+                                 <tr>
+                                    <td align=3D"center" style=3D"padding-t=
+op: 10px; padding-bottom: 0px;">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"85%">
+                                       <tbody>
+                                          <tr><!-- IMAGE START -->
+                                             <td align=3D"center" style=3D"=
+padding-right: 5px;" valign=3D"top" width=3D"48"><a href=3D"https://t1.em.l=
+inkedin.com/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021b&e=
+=3DbWNpZD03NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNh=
+cmVlcnMtam9ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGU=
+tbmEmc3JjPWUtZW1s&s=3DsohvCaEg9AmKfW04jlJlm_eMpYUgosL5m-n3X959wC4" _label=
+=3D"COMPLETE_YOUR_PROFILE" _category=3D"CTA" style=3D"color: #262626; text-=
+decoration: none;" ><img alt=3D"" src=3D"https://delivery-p143253-e1476319.=
+adobeaemcloud.com/adobe/assets/urn:aaid:aem:d1127b2b-f21d-441c-94fc-f881b2b=
+4d719/as/01260b22cd73b01ae779ec54475eea3570daac41a9baee6a3202ca8e32e64c7f.p=
+ng" style=3D"display: block; border: 0;" width=3D"30" /></a></td>
+                                             <!-- IMAGE END -->
+                                             <td>
+                                             <table border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%"><!-- COPY START --><!-- COPY END -=
+-><!-- COPY START -->
+                                                <tbody>
+                                                   <tr>
+                                                      <td style=3D"text-ali=
+gn: left; font-size: 18px; line-height: 1.25em; color: #191919; font-family=
+: Helvetica Neue, Arial, sans-serif;"><a href=3D"https://t1.em.linkedin.com=
+/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021c&e=3DbWNpZD03=
+NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9=
+ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPW=
+UtZW1s&s=3Dc9-AB7HrEdRx-wEKZyU1tv1jzHx9lD9kIdNyZOc4k8o" _label=3D"COMPLETE_=
+YOUR_PROFILE" _category=3D"CTA" style=3D"color: #262626; text-decoration: n=
+one;" >Let them know you're open to new&nbsp;opportunities.</a></td>
+                                                   </tr>
+                                                   <!-- COPY END -->
+                                                </tbody>
+                                             </table>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                                 <!-- ENTITY 1 END / --><!-- / ENTITY 2 STA=
+RT -->
+                                 <tr>
+                                    <td align=3D"center" style=3D"padding-t=
+op: 25px; padding-bottom: 0px;">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"85%">
+                                       <tbody>
+                                          <tr><!-- IMAGE START -->
+                                             <td align=3D"center" style=3D"=
+padding-right: 5px;" valign=3D"top" width=3D"48"><a href=3D"https://t1.em.l=
+inkedin.com/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021d&e=
+=3DbWNpZD03NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNh=
+cmVlcnMtam9ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGU=
+tbmEmc3JjPWUtZW1s&s=3DqghZrBUjCJWaTOlpgTKxHy1h8kcZU0rnmssTE0nOE9Y" _label=
+=3D"COMPLETE_YOUR_PROFILE" _category=3D"CTA" style=3D"color: #262626; text-=
+decoration: none;" ><img alt=3D"" src=3D"https://delivery-p143253-e1476319.=
+adobeaemcloud.com/adobe/assets/urn:aaid:aem:d1127b2b-f21d-441c-94fc-f881b2b=
+4d719/as/01260b22cd73b01ae779ec54475eea3570daac41a9baee6a3202ca8e32e64c7f.p=
+ng" style=3D"display: block; border: 0;" width=3D"30" /></a></td>
+                                             <!-- IMAGE END -->
+                                             <td>
+                                             <table border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%"><!-- COPY START --><!-- COPY END -=
+-><!-- COPY START -->
+                                                <tbody>
+                                                   <tr>
+                                                      <td style=3D"text-ali=
+gn: left; font-size: 18px; line-height: 1.25em; color: #191919; font-family=
+: Helvetica Neue, Arial, sans-serif;"><a href=3D"https://t1.em.linkedin.com=
+/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021e&e=3DbWNpZD03=
+NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9=
+ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPW=
+UtZW1s&s=3DVA5JePQJNwNzDIgjCKrZ8TqWc_-obKr5rxVfLQMckIU" _label=3D"COMPLETE_=
+YOUR_PROFILE" _category=3D"CTA" style=3D"color: #262626; text-decoration: n=
+one;" >Complete your profile by adding roles you may be interested&nbsp;in.=
+</a></td>
+                                                   </tr>
+                                                   <!-- COPY END -->
+                                                </tbody>
+                                             </table>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                                 <!-- ENTITY 2 END / --><!-- ENTITY 5 END /=
+ -->
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- ENTITY LIST END /// --><!-- /// LOCKUP START -=
+->
+                        <tr>
+                           <td>
+                           <table border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" role=3D"presentation" width=3D"100%">
+                              <tbody>
+                                 <tr>
+                                    <td align=3D"center" style=3D"backgroun=
+d-color: #ffffff; padding-bottom: 12px;">
+                                    <table align=3D"center" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"90%"><!-- =
+/ SECONDARY CTA START -->
+                                       <tbody>
+                                          <tr>
+                                             <td style=3D"padding-top: 16px=
+; padding-bottom: 16px;">
+                                             <table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation">
+                                                <tbody>
+                                                   <tr>
+                                                      <td align=3D"center" =
+class=3D"button" style=3D"border: 1px solid #0A66C2; padding: 14px 24px; fo=
+nt-size: 16px; color: white; font-family: Helvetica Neue, Arial, sans-serif=
+; text-align: center; font-weight: bold;"><a href=3D"https://t1.em.linkedin=
+.com/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e4021f&e=3DbWNp=
+ZD03NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnM=
+tam9ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3=
+JjPWUtZW1s&s=3DmpzhEHoflYeGlU5M7vsUBdxlIF2OxlfmNcLA9-BphW8" _label=3D"ADD_J=
+OB_PREFER" _category=3D"CTA" style=3D"color: #0A66C2;; text-decoration: non=
+e;" ><span style=3D"display: block; width: 100%;"> Add job&nbsp;preferences=
+</span> </a></td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                             </td>
+                                          </tr>
+                                          <!-- SECONDARY CTA END / -->
+                                       </tbody>
+                                    </table>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           </td>
+                        </tr>
+                        <!-- LOCKUP END /// --><!-- MODULES END - DO NOT AD=
+D MODULES BELOW THIS LINE /// --><!-- /// FOOTER START -->
+                        <tr>
+                           <td style=3D"background-color: #F3F2EF; padding-=
+top: 12px; padding-bottom: 36px;">
+               <html lang=3D"en">
+<head>
+<title>Footer Mercado English</title>
+</head>
+<body>
+<table role=3D"presentation" width=3D"87%" border=3D"0" align=3D"center" ce=
+llpadding=3D"0" cellspacing=3D"0"><!-- COPY START -->
+<tbody>
+<tr>
+<td style=3D"padding-top: 24px; text-align: left; font-size: 14px; line-hei=
+ght: 1.3em; color: #191919; font-family: Helvetica Neue, Arial, sans-serif;=
+">This email was intended for VASUDEV MV (Engineering Student @ HKBK Colleg=
+e of Engineering  CS) <br><a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh=
+668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40220&e=3DbWNpZD03NTE2NjE3Nzk0=
+MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cml=
+nZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1s&s=3DE=
+j6MdkcMLMf9Dk0ncSq57Wiv5WXbFCjJceTzOIM5Ldo" _label=3D"Security_Footer" _cat=
+egory=3D"Footer" ><span style=3D"color: #0a66c2; text-decoration: underline=
+;">Learn why we included=A0this.</span></a> <br><br>This is an occasional e=
+mail to help you get the most out=A0of=A0LinkedIn. <br>
+  
+  <br>
+  
+  <a href=3D"https://t1.em.linkedin.com/r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-=
+602ed5574986,b5fb5a,e40221&e=3DbWNpZD03NTE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwt=
+bWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi1=
+3aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZW1sJnAxPUFRSHE4U2kxenBGNTJ3QUFBYU=
+M0aWNCLWZaVl9xZVFUMVhNd3J1RnF6QklQMnRJWVRFM3VWWjA3MXBENU9ILVpPQkNfdVZWMG9JS=
+VNxcFZCWVBJVSZwMj0xMTgxNjQ0MiZwMz0xMTkyNjM2MiZwND0yMDI2LTEwLTIx&s=3DCdfEfEE=
+5QkV04qkdEI0P3FxLMGA-H5s6HtnczZxvAt8" _label=3D"UNSUB" _category=3D"unsub" =
+_type=3D"optout" ><span style=3D"color: #0a66c2; text-decoration: underline=
+;">Unsubscribe</span></a>=A0=B7=A0=A0<a href=3D"https://t1.em.linkedin.com/=
+r/=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40222&e=3DbWNpZD03N=
+TE2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9i=
+c2d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWU=
+tZW1s&s=3DAuRMUygcWitV4U61O_v_c41kbJ_rTAGL6vVzfnSny8A" _label=3D"HELP_ENGLI=
+SH" _category=3D"Footer" ><span style=3D"color: #0a66c2; text-decoration: u=
+nderline;">Help</span></a></td>
+</tr>
+<!-- COPY END --> <!-- IMAGE START -->
+<tr>
+<td style=3D"padding-top: 24px;"><a href=3D"https://t1.em.linkedin.com/r/=
+=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,e40223&e=3DbWNpZD03NTE=
+2NjE3Nzk0MTY4Mjc5MDQyJnRyaz1lbWwtbWt0Zy1saS1tZW0tZ2xvYmFsLWNhcmVlcnMtam9ic2=
+d0bS10cmlnZ2VyMS1hY3F1aXNpdGlvbi13aW5iYWNrLW9jdDIwMjYtdjEtcGUtbmEmc3JjPWUtZ=
+W1s&s=3DuNf5syzP4kBmYVlFiJ5GK_9THbRdR-DzzNyABTFpscI" _label=3D"LOGO" _categ=
+ory=3D"Footer" ><img src=3D"https://res1.em.linkedin.com/res/tracking/linke=
+din-blue-80x20.png" width=3D"80" alt=3D"LinkedIn" style=3D"display: block; =
+border: 0; color: black; font-size: 20px; font-weight: bold; font-family: s=
+ans-serif;"></a></td>
+</tr>
+<!-- IMAGE END --> <!-- COPY START -->
+<tr>
+<td style=3D"padding-top: 20px;padding-bottom: 24px; text-align: left; font=
+-size: 14px; line-height: 1.3em; color: #191919; font-family: Helvetica Neu=
+e, Arial, sans-serif;">=A92026,
+
+LinkedIn Ireland Unlimited Company.
+
+All rights reserved. <br>
+
+LinkedIn Ireland Unlimited Company, Gardner House, Wilton Plaza, Wilton Pla=
+ce, Dublin 2, Ireland.
+
+<br>LinkedIn and the LinkedIn logo are registered trademarks of LinkedIn.</=
+td>
+</tr>
+<!-- COPY END --></tbody>
+</table>
+</body>
+</html>
+               
+               </td>
+                        </tr>
+                        <!-- FOOTER END /// -->
+                     </tbody>
+                  </table>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+<grammarly-desktop-integration data-grammarly-shadow-root=3D"true"></gramma=
+rly-desktop-integration></body>
+</html></p>
+
+<img height=3D'0' width=3D'0' alt=3D'' src=3D'https://t1.em.linkedin.com/r/=
+=3Fid=3Dh668d16bc-1fbc-479d-b32a-602ed5574986,b5fb5a,1'/></body>
+</html>
+

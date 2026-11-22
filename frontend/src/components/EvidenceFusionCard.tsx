@@ -371,6 +371,12 @@ export const EvidenceFusionCard: FC<EvidenceFusionCardProps> = ({ fusion }) => {
                 </h5>
                 <span className="text-xs font-mono text-slate-500 font-medium">
                   Total Points Accrued: <strong className="text-navy-900">{fusion.overall_risk_score ?? 0}</strong>/100
+                  {(fusion.risk_score_breakdown.floor_adjustment ?? 0) > 0 && (
+                    <span className="text-slate-400">
+                      {' '}
+                      ({fusion.risk_score_breakdown.category_sum ?? 0} + {fusion.risk_score_breakdown.floor_adjustment} floor)
+                    </span>
+                  )}
                 </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -400,6 +406,28 @@ export const EvidenceFusionCard: FC<EvidenceFusionCardProps> = ({ fusion }) => {
                   <Network className="w-4 h-4 text-indigo-600" />
                 )}
               </div>
+              {(fusion.risk_score_breakdown.floor_adjustment ?? 0) > 0 && (
+                <div className="p-4 rounded-xl border border-red-200 bg-red-50/40">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <span className="text-xs font-bold text-navy-900 block leading-tight">
+                        Safety-Floor Adjustment
+                      </span>
+                      <p className="text-xs text-slate-600 leading-relaxed mt-1">
+                        {fusion.risk_score_breakdown.floor_adjustment_reason ||
+                          'A minimum-risk floor was applied because of a severe indicator.'}
+                      </p>
+                    </div>
+                    <span className="text-base font-black font-mono text-red-700 flex-shrink-0">
+                      +{fusion.risk_score_breakdown.floor_adjustment}
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-mono text-slate-500 mt-2 pt-2 border-t border-red-100">
+                    {fusion.risk_score_breakdown.category_sum ?? 0} (category points) +{' '}
+                    {fusion.risk_score_breakdown.floor_adjustment} (floor) = {fusion.overall_risk_score ?? 0}/100
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>

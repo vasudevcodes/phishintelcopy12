@@ -1,0 +1,501 @@
+{
+  "metadata": {
+    "dataset_path": "data/raw/meajor_cleaned_preprocessed.parquet.gzip",
+    "file_size_mb": 82.28,
+    "format": "parquet.gzip",
+    "creator_library": "fastparquet 2024.11.0",
+    "audit_timestamp": "2026-10-04T17:15:00Z"
+  },
+  "overview": {
+    "total_rows": 108685,
+    "total_columns": 20,
+    "all_null_rows": 0,
+    "exact_duplicate_rows": 13,
+    "exact_duplicate_total_instances": 26
+  },
+  "schema": {
+    "sender": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "sender_domain": {
+      "dtype": "str",
+      "null_count": 494,
+      "null_pct": 0.4545
+    },
+    "receiver": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "receiver_domain": {
+      "dtype": "str",
+      "null_count": 2371,
+      "null_pct": 2.1815
+    },
+    "date": {
+      "dtype": "str",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "subject": {
+      "dtype": "str",
+      "null_count": 1455,
+      "null_pct": 1.3387
+    },
+    "content_types": {
+      "dtype": "str",
+      "null_count": 1,
+      "null_pct": 0.0009
+    },
+    "body": {
+      "dtype": "str",
+      "null_count": 1,
+      "null_pct": 0.0009
+    },
+    "urls": {
+      "dtype": "str",
+      "null_count": 44633,
+      "null_pct": 41.0664
+    },
+    "url_count": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "url_length_max": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "url_length_avg": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "url_subdom_max": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "url_subdom_avg": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "attachment_count": {
+      "dtype": "float64",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "has_attachments": {
+      "dtype": "bool",
+      "null_count": 0,
+      "null_pct": 0.0
+    },
+    "attachment_types": {
+      "dtype": "str",
+      "null_count": 107019,
+      "null_pct": 98.4671
+    },
+    "language": {
+      "dtype": "str",
+      "null_count": 1,
+      "null_pct": 0.0009
+    },
+    "source": {
+      "dtype": "str",
+      "null_count": 1,
+      "null_pct": 0.0009
+    },
+    "label": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_pct": 0.0009
+    }
+  },
+  "class_distribution": {
+    "label_column": "label",
+    "unique_values": [
+      "0.0",
+      "1.0",
+      "nan"
+    ],
+    "counts": {
+      "0.0": 60650,
+      "1.0": 48034,
+      "nan": 1
+    },
+    "percentages": {
+      "0.0": 55.8035,
+      "1.0": 44.1956,
+      "nan": 0.0009
+    },
+    "null_label_count": 1,
+    "null_label_rows": [
+      51258
+    ]
+  },
+  "sources": {
+    "source_column": "source",
+    "counts": {
+      "trec5": 49583,
+      "trec7": 44096,
+      "trec6": 15005,
+      "nan": 1
+    },
+    "percentages": {
+      "trec5": 45.6208,
+      "trec7": 40.5723,
+      "trec6": 13.806,
+      "nan": 0.0009
+    },
+    "crosstab_with_label": {
+      "-999.0": {
+        "MISSING": 1,
+        "trec5": 0,
+        "trec6": 0,
+        "trec7": 0,
+        "All": 1
+      },
+      "0.0": {
+        "MISSING": 0,
+        "trec5": 29929,
+        "trec6": 11208,
+        "trec7": 19513,
+        "All": 60650
+      },
+      "1.0": {
+        "MISSING": 0,
+        "trec5": 19654,
+        "trec6": 3797,
+        "trec7": 24583,
+        "All": 48034
+      },
+      "All": {
+        "MISSING": 1,
+        "trec5": 49583,
+        "trec6": 15005,
+        "trec7": 44096,
+        "All": 108685
+      }
+    },
+    "date_ranges_by_source": {
+      "trec5": {
+        "min": "1898-06-16 08:01:06+00:00",
+        "max": "2034-11-21 06:42:28+00:00",
+        "count": 49583
+      },
+      "trec6": {
+        "min": "1889-05-19 08:59:51+00:00",
+        "max": "2019-10-29 21:53:50+00:00",
+        "count": 15005
+      },
+      "trec7": {
+        "min": "1900-06-27 19:57:30+00:00",
+        "max": "2102-03-16 15:16:56+00:00",
+        "count": 44096
+      }
+    }
+  },
+  "data_quality": {
+    "missing_values": {
+      "sender_domain": {
+        "count": 494,
+        "percentage": 0.4545
+      },
+      "receiver_domain": {
+        "count": 2371,
+        "percentage": 2.1815
+      },
+      "subject": {
+        "count": 1455,
+        "percentage": 1.3387
+      },
+      "content_types": {
+        "count": 1,
+        "percentage": 0.0009
+      },
+      "body": {
+        "count": 1,
+        "percentage": 0.0009
+      },
+      "urls": {
+        "count": 44633,
+        "percentage": 41.0664
+      },
+      "attachment_types": {
+        "count": 107019,
+        "percentage": 98.4671
+      },
+      "language": {
+        "count": 1,
+        "percentage": 0.0009
+      },
+      "source": {
+        "count": 1,
+        "percentage": 0.0009
+      },
+      "label": {
+        "count": 1,
+        "percentage": 0.0009
+      }
+    },
+    "exact_duplicates": 13,
+    "body_unique_count": 103518,
+    "body_duplicate_count": 5166,
+    "subject_body_duplicates_count": 3751,
+    "cross_label_conflicting_bodies": {
+      "distinct_conflicting_bodies": 5,
+      "total_conflicted_rows": 54,
+      "examples": [
+        {
+          "body_snippet": "[FILE_NAME]",
+          "label_counts": {
+            "0.0": 13,
+            "1.0": 6
+          },
+          "sources": {
+            "trec5": 19
+          }
+        },
+        {
+          "body_snippet": "[FINANCIAL_INFO]",
+          "label_counts": {
+            "0.0": 1,
+            "1.0": 1
+          },
+          "sources": {
+            "trec5": 1,
+            "trec7": 1
+          }
+        },
+        {
+          "body_snippet": "[NAME]",
+          "label_counts": {
+            "1.0": 9,
+            "0.0": 7
+          },
+          "sources": {
+            "trec5": 16
+          }
+        },
+        {
+          "body_snippet": "[USERNAME]",
+          "label_counts": {
+            "1.0": 13,
+            "0.0": 2
+          },
+          "sources": {
+            "trec5": 14,
+            "trec7": 1
+          }
+        },
+        {
+          "body_snippet": "[USERNAME]<|EMAIL_SEPARATOR|>[USERNAME]",
+          "label_counts": {
+            "0.0": 1,
+            "1.0": 1
+          },
+          "sources": {
+            "trec5": 1,
+            "trec6": 1
+          }
+        }
+      ]
+    }
+  },
+  "anonymization_and_features": {
+    "anonymization_present": true,
+    "body_placeholder_prevalence_pct": 96.32,
+    "subject_placeholder_prevalence_pct": 39.4,
+    "top_placeholders": [
+      [
+        "[PRODUCT]",
+        27682
+      ],
+      [
+        "[ORGANIZATION]",
+        26342
+      ],
+      [
+        "[NAME]",
+        22628
+      ],
+      [
+        "[FINANCIAL_INFO]",
+        21567
+      ],
+      [
+        "[REFERENCE_NUMBER]",
+        11037
+      ],
+      [
+        "<|SYMBOL|>",
+        9237
+      ],
+      [
+        "[DATE]",
+        8622
+      ],
+      [
+        "<|EMOJI|>",
+        7812
+      ],
+      [
+        "[ADDRESS]",
+        7563
+      ],
+      [
+        "<|URL|>",
+        5776
+      ],
+      [
+        "[URL]",
+        4138
+      ],
+      [
+        "[EMAIL_ADDRESS]",
+        3203
+      ],
+      [
+        "[TIME]",
+        3193
+      ],
+      [
+        "[PHONE_NUMBER]",
+        3100
+      ],
+      [
+        "<|EMAIL|>",
+        2441
+      ]
+    ],
+    "sender_receiver_hashing": "SHA256 hex strings",
+    "raw_headers_available": false,
+    "auth_results_available": false,
+    "raw_urls_column_available": true,
+    "raw_urls_populated_pct": 58.93,
+    "body_urls_replaced_with_placeholders": true,
+    "ip_in_body_anonymized": true
+  },
+  "text_suitability": {
+    "text_columns": [
+      "subject",
+      "body"
+    ],
+    "body_stats": {
+      "name": "body",
+      "null_count": 1,
+      "empty_or_whitespace_count": 0,
+      "empty_or_whitespace_pct": 0.0009,
+      "char_stats": {
+        "min": 1,
+        "p25": 380.0,
+        "median": 797.0,
+        "mean": 1168.11,
+        "p75": 1533.0,
+        "p95": 3629.0,
+        "p99": 4923.0,
+        "max": 30574
+      },
+      "word_stats": {
+        "min": 1,
+        "p25": 55.0,
+        "median": 121.0,
+        "mean": 171.75,
+        "p75": 227.0,
+        "p95": 547.0,
+        "p99": 709.0,
+        "max": 1199
+      }
+    },
+    "subject_stats": {
+      "name": "subject",
+      "null_count": 1455,
+      "empty_or_whitespace_count": 0,
+      "empty_or_whitespace_pct": 1.3387,
+      "char_stats": {
+        "min": 1,
+        "p25": 20.0,
+        "median": 32.0,
+        "mean": 42.61,
+        "p75": 48.0,
+        "p95": 104.0,
+        "p99": 275.0,
+        "max": 3701
+      },
+      "word_stats": {
+        "min": 1,
+        "p25": 3.0,
+        "median": 5.0,
+        "mean": 5.36,
+        "p75": 7.0,
+        "p95": 11.0,
+        "p99": 17.0,
+        "max": 578
+      }
+    },
+    "combined_stats": {
+      "name": "combined",
+      "null_count": 0,
+      "empty_or_whitespace_count": 0,
+      "empty_or_whitespace_pct": 0.0,
+      "char_stats": {
+        "min": 4,
+        "p25": 419.0,
+        "median": 839.0,
+        "mean": 1211.14,
+        "p75": 1572.0,
+        "p95": 3676.0,
+        "p99": 4957.0,
+        "max": 31135
+      },
+      "word_stats": {
+        "min": 1,
+        "p25": 59.0,
+        "median": 126.0,
+        "mean": 177.03,
+        "p75": 233.0,
+        "p95": 554.0,
+        "p99": 714.0,
+        "max": 1204
+      }
+    },
+    "casing_preserved": 99.05,
+    "html_tags_remaining_pct": 3.45,
+    "suitability_for_transformer": {
+      "token_length_fit": "Excellent (median 121 words, 95th percentile 547 words, fits standard 512/8192 context)",
+      "casing_and_syntax": "Preserved natural text casing and sentence punctuation",
+      "major_limitations": [
+        "URLs in text replaced by [URL] and <|URL|>, depriving language models of raw URL lexical features",
+        "Entity placeholders ([ORGANIZATION], [PRODUCT], [NAME]) require special token registration to avoid subword fragmentation",
+        "Spam vs phishing semantic gap (label 1 represents 2005-2007 commercial/bulk spam rather than targeted modern phishing)"
+      ]
+    }
+  },
+  "leakage_risks": {
+    "domain_leakage": {
+      "enron_benign_count": 21660,
+      "enron_phish_count": 24,
+      "enron_share_of_all_benign_pct": 35.71,
+      "uwaterloo_receiver_phish_count": 23495,
+      "overlapping_sender_domains": 446,
+      "unique_sender_domains_label_0": 4112,
+      "unique_sender_domains_label_1": 24798
+    },
+    "template_leakage": {
+      "duplicate_bodies": 5166,
+      "duplicate_subject_bodies": 3751
+    },
+    "source_leakage": "Collection source (trec5, trec6, trec7) correlates with target class distributions",
+    "cross_label_leakage": "54 rows share identical placeholder bodies across class 0 and 1"
+  },
+  "recommendations": {
+    "splitting_strategy": "Stratified group split by domain/body hash OR source-held-out evaluation (e.g. train trec5/trec6, test trec7)",
+    "feature_selection": "Exclude sender_domain, receiver_domain, and source from feature inputs to prevent spurious shortcut learning",
+    "text_handling": "Add custom special tokens for brackets like [ORGANIZATION], [PRODUCT], [NAME], <|URL|>, or reinject URLs from urls column",
+    "clean_null_row": "Drop index 51258 (single unreadable/NaN row across label and source)"
+  }
+}

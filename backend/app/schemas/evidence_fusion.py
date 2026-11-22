@@ -133,6 +133,12 @@ class CategoryScoresBreakdown(BaseModel):
     content_language: CategoryScoreDetail = Field(..., description="Content and language analysis (max 20 pts)")
     ml_model: CategoryScoreDetail = Field(..., description="ML model analysis (max 20 pts)")
     header_ip: CategoryScoreDetail = Field(..., description="Header, IP and infrastructure intelligence (max 10 pts)")
+    category_sum: int = Field(0, ge=0, description="Sum of the five category scores before any safety floor")
+    floor_adjustment: int = Field(
+        0, ge=0,
+        description="Points added by a safety floor so that category_sum + floor_adjustment == overall_risk_score",
+    )
+    floor_adjustment_reason: Optional[str] = Field(None, description="Why the safety floor raised the score, if it did")
 
 
 class EvidenceFusionResult(BaseModel):

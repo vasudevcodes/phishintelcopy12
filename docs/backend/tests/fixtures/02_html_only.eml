@@ -1,0 +1,21 @@
+From: notifications@security-alerts.org
+To: security-team@corp.net
+Subject: Weekly Threat Summary Report
+Date: Sun, 03 Oct 2026 23:00:00 +0000
+Message-ID: <threat-report-4451@security-alerts.org>
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html>
+<html>
+<head><title>Threat Report</title></head>
+<body>
+  <div style="font-family: Arial, sans-serif;">
+    <h2 style="color: #d32f2f;">Critical System Notice</h2>
+    <p>Please review the weekly forensic summary on our portal:</p>
+    <p><a href="https://portal.security-alerts.org/reports/weekly-40">Access Threat Report</a></p>
+    <script>alert("Untrusted script should never execute");</script>
+    <footer>PhishIntel Automated Sandbox Notification</footer>
+  </div>
+</body>
+</html>

@@ -17,21 +17,37 @@ from __future__ import annotations
 
 import logging
 import os
+import sys
 from pathlib import Path
 from typing import Optional
 
 # PyTorch can be unavailable (not installed, or blocked by a Windows Application Control policy
 # that refuses to load torch's DLLs). That must not crash the whole API: the text model then
 # reports UNAVAILABLE, exactly like a missing checkpoint, and every other analysis still runs.
+_INSTALL_HINT = (
+    "Fix: activate the backend virtual environment and run "
+    "'pip install -r requirements.txt' (it now includes torch + transformers), "
+    "then restart uvicorn. Diagnostics: GET /health/model"
+)
+_BLOCKED_DLL_HINT = (
+    "Windows blocked a PyTorch DLL (WinError 4551 / Application Control). Install the Microsoft "
+    "Visual C++ Redistributable (x64), reinstall torch inside this venv, and make sure the venv "
+    "folder is not under a policy-restricted path. See FIX_TRANSFORMERS.md"
+)
+
 try:
     import torch
     from transformers import AutoModelForSequenceClassification, AutoTokenizer, PreTrainedTokenizerBase
 
     _TORCH_IMPORT_ERROR = None
-except (ImportError, OSError) as _torch_exc:  # OSError covers WinError 4551 (blocked DLL)
+except Exception as _torch_exc:  # ImportError (not installed), OSError (blocked/broken DLL), etc.
     torch = None  # type: ignore[assignment]
     AutoModelForSequenceClassification = AutoTokenizer = PreTrainedTokenizerBase = None  # type: ignore[assignment,misc]
-    _TORCH_IMPORT_ERROR = f"PyTorch/transformers could not be loaded: {_torch_exc}"
+    _hint = _BLOCKED_DLL_HINT if isinstance(_torch_exc, OSError) else _INSTALL_HINT
+    _TORCH_IMPORT_ERROR = (
+        f"PyTorch/transformers could not be loaded: {type(_torch_exc).__name__}: {_torch_exc}. "
+        f"(running under Python: {sys.executable}) {_hint}"
+    )
 
 from app.schemas.evidence_fusion import (
     ModelInferenceEvidence,
@@ -203,6 +219,24 @@ class ModelInferenceEngine:
                 status=ModelInferenceStatus.ERROR,
                 error_message=f"Inference exception: {str(inf_err)}",
             )
+
+    def diagnostics(self) -> dict:
+        """
+        Cheap, side-effect-free status report (does not load the weights).
+        Used by GET /health/model so setup problems are visible without reading logs.
+        """
+        return {
+            "python_executable": sys.executable,
+            "python_version": sys.version.split()[0],
+            "torch_importable": torch is not None,
+            "torch_version": getattr(torch, "__version__", None) if torch is not None else None,
+            "cuda_available": bool(torch.cuda.is_available()) if torch is not None else False,
+            "checkpoint_dir": str(self.checkpoint_dir),
+            "checkpoint_found": self.is_checkpoint_available(),
+            "import_error": _TORCH_IMPORT_ERROR,
+            "load_error": self._load_error,
+            "model_loaded": self._model is not None,
+        }
 
     def reset(self) -> None:
         """

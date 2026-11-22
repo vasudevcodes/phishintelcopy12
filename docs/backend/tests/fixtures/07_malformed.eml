@@ -1,0 +1,17 @@
+From: corrupt-sender@broken.domain
+Subject: Malformed Email Sample
+Date: Bad Date Format Mon 99 Oct 2026
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="MALFORMED_DELIMITER_99"
+
+This header block is followed by broken body data without standard boundary preamble.
+--MALFORMED_DELIMITER_99
+Content-Type: text/plain; charset="unknown-8bit-ascii"
+
+This part has an unusual charset declaration and unclosed boundaries.
+Some URLs: http://broken-link.com/test
+--MALFORMED_DELIMITER_99
+Content-Disposition: attachment; filename="partially_corrupt.bin"
+Content-Type: application/octet-stream
+
+%%%NON_BASE64_RAW_BYTES_CORRUPTED%%%
