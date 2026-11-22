@@ -145,6 +145,7 @@ def _extract_auth_evidence(
 
     has_pass = any(s == "PASS" for s in [spf_st, dkim_st, dmarc_st])
     has_fail = any(s == "FAIL" for s in [spf_st, dkim_st, dmarc_st])
+    live_mode = getattr(auth_analysis, "verification_mode", "OFFLINE_REPORTED") == "LIVE_DNS"
 
     # Correlate failures: In RFC 7489, DMARC failure often directly results from SPF/DKIM failure
     correlated_failure = False
@@ -167,10 +168,19 @@ def _extract_auth_evidence(
     # This prevents the evidence fusion engine from treating reported PASS as a trust signal.
     if provenance_str == "TRUSTED_RECEIVER_EVIDENCE" and has_pass and is_boundary_trusted:
         has_valid_auth = True
+    elif live_mode and dmarc_st == "PASS":
+        # Live mode: PhishIntel itself verified an aligned SPF/DKIM pass against live DNS.
+        has_valid_auth = True
     else:
         has_valid_auth = False
 
-    if has_any_pass_finding and not is_boundary_trusted:
+    if live_mode:
+        contributing.append(
+            "Authentication was independently re-verified by PhishIntel through live DNS lookups "
+            "(SPF check_host, DKIM public-key signature check, DMARC policy and alignment) rather than taken from header claims."
+        )
+
+    if has_any_pass_finding and not is_boundary_trusted and not live_mode:
         if boundary_trust_str in ("UNTRUSTED", "SUSPICIOUS"):
             contributing.append(
                 f"Authentication results were recorded by an untrusted or unrecognized authserv-id ('{boundary_authserv}')."
@@ -194,6 +204,12 @@ def _extract_auth_evidence(
             contributing.append(f"Explicit authentication failure observed: SPF={spf_st}, DKIM={dkim_st}, with correlated downstream DMARC={dmarc_st}.")
         else:
             contributing.append(f"Explicit authentication failure observed: SPF={spf_st}, DKIM={dkim_st}, DMARC={dmarc_st}.")
+    elif has_pass and not has_fail and live_mode:
+        missing_or_inconclusive.append(
+            f"Live DNS verification: SPF={spf_st}, DKIM={dkim_st}, DMARC={dmarc_st}. "
+            "A pass shows the sender controls the authenticated domain; it does not show the message is benign "
+            "(attackers can authenticate their own look-alike domains)."
+        )
     elif has_pass and not has_fail:
         authserv_info = f" via reported MTA ({boundary_authserv})" if boundary_authserv else ""
         missing_or_inconclusive.append(
@@ -223,6 +239,7 @@ def _extract_auth_evidence(
         correlated_failure_noted=correlated_failure,
         boundary_authserv_trust=boundary_trust_str,
         is_boundary_trusted=is_boundary_trusted,
+        verification_mode="LIVE_DNS" if live_mode else "OFFLINE_REPORTED",
         explanation=explanation,
     )
     return summary, contributing, missing_or_inconclusive
@@ -402,8 +419,9 @@ def _format_forensic_explanation(
             )
         else:
             parts.append(
-                f"Authentication evidence: Explicit failure reported in headers (SPF={auth_summary.spf_status}, "
-                f"DKIM={auth_summary.dkim_status}, DMARC={auth_summary.dmarc_status}), but assertions cannot be independently verified offline."
+                f"Authentication evidence: Explicit failure {'verified by live DNS lookup' if getattr(auth_summary, 'verification_mode', '') == 'LIVE_DNS' else 'reported in headers'} (SPF={auth_summary.spf_status}, "
+                f"DKIM={auth_summary.dkim_status}, DMARC={auth_summary.dmarc_status})"
+                + ("." if getattr(auth_summary, "verification_mode", "") == "LIVE_DNS" else ", but assertions cannot be independently verified offline.")
             )
     elif auth_summary.has_conflicts:
         parts.append(
@@ -414,6 +432,11 @@ def _format_forensic_explanation(
         parts.append(
             f"Authentication evidence: Cryptographically verified receiver-boundary authentication passed "
             f"(SPF={auth_summary.spf_status}, DKIM={auth_summary.dkim_status}, DMARC={auth_summary.dmarc_status})."
+        )
+    elif has_any_pass and getattr(auth_summary, "verification_mode", "OFFLINE_REPORTED") == "LIVE_DNS":
+        parts.append(
+            f"Authentication evidence: Live DNS verification passed (SPF={auth_summary.spf_status}, "
+            f"DKIM={auth_summary.dkim_status}, DMARC={auth_summary.dmarc_status}); this confirms control of the authenticated domain, not benign intent."
         )
     elif has_any_pass:
         parts.append(

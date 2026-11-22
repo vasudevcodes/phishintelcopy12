@@ -232,10 +232,81 @@ export interface DKIMCryptoResult {
   covers_from_header?: boolean | null;
   weak_algorithm?: boolean;
   notes?: string[];
+  /** Live mode: outcome of the DNS lookup for the signer's public key. */
+  key_lookup?: {
+    outcome?: string;
+    record?: string;
+    testing_mode?: boolean;
+    key_type?: string;
+    detail?: string;
+  } | null;
+}
+
+// --- Live (online) DNS verification of SPF / DKIM / DMARC ---
+export interface LiveSPFResult {
+  evaluated?: boolean;
+  result: string;
+  domain?: string;
+  sender?: string;
+  client_ip?: string;
+  client_ip_source?: string;
+  helo?: string;
+  identity?: string;
+  mechanism?: string | null;
+  record?: string | null;
+  dns_lookups?: number;
+  explanation?: string;
+  trace?: string[];
+  other_hops?: { client_ip: string; hop_index: number; result: string; explanation: string }[];
+}
+
+export interface LiveDKIMResult {
+  result: string;
+  domain?: string | null;
+  selector?: string | null;
+  explanation?: string;
+  signatures?: DKIMCryptoResult[];
+}
+
+export interface LiveDMARCResult {
+  result: string;
+  from_domain?: string;
+  policy_domain?: string | null;
+  record?: string | null;
+  policy?: string | null;
+  subdomain_policy?: string | null;
+  applied_policy?: string | null;
+  pct?: number;
+  adkim?: string;
+  aspf?: string;
+  spf_aligned?: boolean;
+  dkim_aligned?: boolean;
+  disposition?: string;
+  explanation?: string;
+  notes?: string[];
+}
+
+export interface LiveVerification {
+  mode: string;
+  available: boolean;
+  error?: string;
+  performed_at: string;
+  message_age_days?: number | null;
+  from_domain?: string;
+  spf?: LiveSPFResult;
+  dkim?: LiveDKIMResult;
+  dmarc?: LiveDMARCResult;
+  summary?: { spf?: string; dkim?: string; dmarc?: string };
+  dns_errors: string[];
+  caveats: string[];
+  duration_ms?: number;
 }
 
 export interface EmailAuthenticationAnalysis {
   dkim_crypto?: DKIMCryptoResult[] | null;
+  /** 'LIVE_DNS' when SPF/DKIM/DMARC were re-computed against live DNS; 'OFFLINE_REPORTED' otherwise. */
+  verification_mode?: string;
+  live_verification?: LiveVerification | null;
   status: OverallAuthStatus;
   spf: SPFEvidence;
   dkim: DKIMEvidence;

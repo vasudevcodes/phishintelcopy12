@@ -77,6 +77,7 @@ class AuthEvidenceSummary(BaseModel):
     correlated_failure_noted: bool = Field(False, description="Whether DMARC failure was correlated with SPF/DKIM to avoid double-counting")
     boundary_authserv_trust: str = Field("UNTRUSTED", description="Trust status of the boundary MTA authserv-id")
     is_boundary_trusted: bool = Field(False, description="Whether authentication was recorded by a trusted recipient boundary MTA")
+    verification_mode: str = Field("OFFLINE_REPORTED", description="LIVE_DNS when statuses were re-verified against live DNS, else OFFLINE_REPORTED")
     explanation: str = Field(..., description="Summary explanation of authentication evidence")
     trust_limitation: str = Field(
         default="Authentication results reflect downstream MTA assertions (RFC 8601/RFC 7208). "

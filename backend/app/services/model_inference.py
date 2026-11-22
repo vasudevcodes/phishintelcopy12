@@ -13,13 +13,25 @@ Design Principles:
    never allows a failure to masquerade as a benign verdict.
 """
 
+from __future__ import annotations
+
 import logging
 import os
 from pathlib import Path
 from typing import Optional
 
-import torch
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, PreTrainedTokenizerBase
+# PyTorch can be unavailable (not installed, or blocked by a Windows Application Control policy
+# that refuses to load torch's DLLs). That must not crash the whole API: the text model then
+# reports UNAVAILABLE, exactly like a missing checkpoint, and every other analysis still runs.
+try:
+    import torch
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer, PreTrainedTokenizerBase
+
+    _TORCH_IMPORT_ERROR = None
+except (ImportError, OSError) as _torch_exc:  # OSError covers WinError 4551 (blocked DLL)
+    torch = None  # type: ignore[assignment]
+    AutoModelForSequenceClassification = AutoTokenizer = PreTrainedTokenizerBase = None  # type: ignore[assignment,misc]
+    _TORCH_IMPORT_ERROR = f"PyTorch/transformers could not be loaded: {_torch_exc}"
 
 from app.schemas.evidence_fusion import (
     ModelInferenceEvidence,
@@ -81,6 +93,12 @@ class ModelInferenceEngine:
         Loads tokenizer and model weights from local files only.
         """
         if self._initialized:
+            return
+
+        if torch is None:
+            logger.warning(_TORCH_IMPORT_ERROR)
+            self._load_error = _TORCH_IMPORT_ERROR
+            self._initialized = True
             return
 
         if not self.is_checkpoint_available():

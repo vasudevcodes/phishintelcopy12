@@ -1,7 +1,10 @@
 """
-Offline cryptographic DKIM verification for PhishIntel (RFC 6376).
+Cryptographic DKIM verification for PhishIntel (RFC 6376).
 
-Runs with NO network access. Two real cryptographic checks are performed:
+Works offline (pinned keys) AND online: the verifier asks a key store for the signer's
+public key. `LocalKeyStore` serves pinned keys from disk; `DNSKeyStore`
+(app/services/live_dkim.py) fetches the live selector._domainkey TXT record from DNS.
+Two real cryptographic checks are performed:
 
   1. Body-hash check  (bh= tag): recomputes SHA-256/SHA-1 over the canonicalized
      body and compares with the signed value. Needs no public key, so it works
@@ -50,7 +53,7 @@ class DKIMCryptoResult:
     canonicalization: Optional[str] = None
     body_hash_valid: Optional[bool] = None
     signature_valid: Optional[bool] = None
-    key_source: Optional[str] = None          # "local_keystore" or None
+    key_source: Optional[str] = None          # "dns", "local_keystore", "local_keystore_dns_fallback" or None
     key_bits: Optional[int] = None
     aligned_with_from: Optional[bool] = None
     covers_from_header: Optional[bool] = None
@@ -248,12 +251,16 @@ def _verify_one(fields, body, sig_idx, sig_raw, from_dom, keystore) -> DKIMCrypt
         pub = keystore.get(t["s"], t["d"])
     except Exception as exc:  # malformed key record
         pub = None
-        res.notes.append(f"Pinned key record unreadable: {exc}")
+        res.notes.append(f"Key record unavailable or unreadable: {exc}")
     if pub is None:
         res.status = DKIMCryptoStatus.BODY_HASH_ONLY
-        res.notes.append(f"No pinned public key for {t['s']}._domainkey.{t['d']}; signature not checked.")
+        missing_note = getattr(keystore, "missing_note", None)
+        res.notes.append(
+            missing_note(t["s"], t["d"]) if callable(missing_note)
+            else f"No pinned public key for {t['s']}._domainkey.{t['d']}; signature not checked."
+        )
         return res
-    res.key_source = "local_keystore"
+    res.key_source = getattr(keystore, "last_source", None) or "local_keystore"
     if isinstance(pub, rsa.RSAPublicKey):
         res.key_bits = pub.key_size
         if pub.key_size < 1024:
@@ -285,5 +292,5 @@ def _verify_one(fields, body, sig_idx, sig_raw, from_dom, keystore) -> DKIMCrypt
     except (InvalidSignature, ValueError):
         res.signature_valid = False
         res.status = DKIMCryptoStatus.SIGNATURE_INVALID
-        res.notes.append("Signature does not verify with the pinned key (headers altered, wrong key, or forged).")
+        res.notes.append("Signature does not verify with the retrieved public key (headers altered, wrong key, or forged).")
     return res

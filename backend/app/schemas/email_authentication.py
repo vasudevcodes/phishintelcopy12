@@ -182,7 +182,15 @@ class EmailAuthenticationAnalysis(BaseModel):
     )
     dkim_crypto: Optional[List[Dict[str, Any]]] = Field(
         None,
-        description="Offline cryptographic DKIM verification (RFC 6376): body-hash recomputation and signature verification against locally pinned public keys. No DNS queries are made.",
+        description="Cryptographic DKIM verification (RFC 6376): body-hash recomputation and signature verification. In live mode the public key is fetched from DNS; in offline mode it comes from locally pinned keys.",
+    )
+    verification_mode: str = Field(
+        default="OFFLINE_REPORTED",
+        description="'LIVE_DNS' when SPF/DKIM/DMARC were re-computed by PhishIntel against live DNS; 'OFFLINE_REPORTED' when statuses only reflect claims inside the uploaded headers.",
+    )
+    live_verification: Optional[Dict[str, Any]] = Field(
+        None,
+        description="Full live DNS verification report (SPF check_host, DKIM key lookup + signature check, DMARC policy + alignment), including caveats and DNS errors.",
     )
     disclaimer: str = Field(
         default=(

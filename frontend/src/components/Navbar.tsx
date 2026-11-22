@@ -1,11 +1,32 @@
+import { useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { Shield, Cpu, WifiOff } from 'lucide-react';
+import { Shield, Cpu, WifiOff, Globe } from 'lucide-react';
 
 export interface NavbarProps {
   onBrandClick?: () => void;
 }
 
 export const Navbar: FC<NavbarProps> = ({ onBrandClick }) => {
+  // True when the backend performs live DNS SPF/DKIM/DMARC verification.
+  const [onlineAuth, setOnlineAuth] = useState<boolean>(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/v1/system/status')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!cancelled && d && typeof d.online_authentication === 'boolean') {
+          setOnlineAuth(d.online_authentication);
+        }
+      })
+      .catch(() => {
+        /* backend unreachable: keep the offline label */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const brand = (
     <>
       <div className="w-9 h-9 rounded-lg bg-brand-500/15 ring-1 ring-brand-400/40 flex items-center justify-center">
@@ -53,8 +74,12 @@ export const Navbar: FC<NavbarProps> = ({ onBrandClick }) => {
               <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-60 animate-ping" />
               <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-400" />
             </span>
-            <WifiOff className="w-3.5 h-3.5 hidden sm:block" aria-hidden="true" />
-            <span>Local · Offline</span>
+            {onlineAuth ? (
+              <Globe className="w-3.5 h-3.5 hidden sm:block" aria-hidden="true" />
+            ) : (
+              <WifiOff className="w-3.5 h-3.5 hidden sm:block" aria-hidden="true" />
+            )}
+            <span>{onlineAuth ? 'Live DNS · Online' : 'Local · Offline'}</span>
           </div>
         </div>
       </div>

@@ -34,6 +34,8 @@ from app.services.email_authentication import analyze_email_authentication
 from app.services.evidence_fusion import fuse_evidence
 from app.services.ip_extractor import extract_ip_candidates_from_received_headers
 from app.services.ip_intelligence import analyze_ip_candidates
+from app.services.live_auth_integration import apply_live_results
+from app.services.live_auth_verifier import run_live_authentication
 from app.services.model_inference import run_model_inference
 from app.services.url_intelligence import analyze_email_extracted_urls
 
@@ -453,6 +455,29 @@ def parse_email_message(file_bytes: bytes, filename: str) -> EmailAnalysisRespon
             ]
         except Exception as crypto_err:
             warnings.append(f"DKIM cryptographic verification non-fatal warning: {str(crypto_err)}")
+
+    # 6c. LIVE (online) SPF / DKIM / DMARC verification against real DNS.
+    # Re-computes all three checks itself instead of trusting header claims, and feeds the
+    # verified results into scoring / evidence fusion. Disable with PHISHINTEL_ONLINE_AUTH=0.
+    if auth_analysis is not None and settings.ONLINE_AUTH_ENABLED:
+        try:
+            _pinned = LocalKeyStore(settings.DKIM_KEYSTORE_PATH)
+            live_report = run_live_authentication(
+                file_bytes,
+                header_info,
+                ip_candidates,
+                pinned_keystore=_pinned,
+                settings_obj=settings,
+            )
+            apply_live_results(auth_analysis, live_report)
+            if not live_report.get("available", True):
+                warnings.append(
+                    "Live authentication unavailable: "
+                    + str(live_report.get("error", "DNS not reachable"))
+                    + " Falling back to header-reported / pinned-key evidence."
+                )
+        except Exception as live_err:
+            warnings.append(f"Live authentication non-fatal warning: {str(live_err)}")
 
     # 7. IP Intelligence Engine (Phase 6A)
     try:

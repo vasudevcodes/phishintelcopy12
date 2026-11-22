@@ -245,6 +245,7 @@ def score_sender_identity_and_auth(
 
     # 3. Authentication Evaluation
     if auth_analysis:
+        live_mode = getattr(auth_analysis, "verification_mode", "OFFLINE_REPORTED") == "LIVE_DNS"
         spf_status = auth_analysis.spf.status.value if hasattr(auth_analysis.spf.status, "value") else str(auth_analysis.spf.status)
         dkim_status = auth_analysis.dkim.status.value if hasattr(auth_analysis.dkim.status, "value") else str(auth_analysis.dkim.status)
         dmarc_status = auth_analysis.dmarc.status.value if hasattr(auth_analysis.dmarc.status, "value") else str(auth_analysis.dmarc.status)
@@ -260,7 +261,7 @@ def score_sender_identity_and_auth(
                 points += 15
                 rules.append("RULE_AUTH_EXPLICIT_FAILURE_DMARC_ENFORCED")
                 neg_ev.append(
-                    f"explicit domain authentication failure (reported authentication failure observed): SPF={spf_status}, "
+                    f"explicit domain authentication failure ({'live DNS verification failure' if live_mode else 'reported authentication failure observed'}): SPF={spf_status}, "
                     f"DKIM={dkim_status}, with correlated downstream DMARC={dmarc_status}."
                 )
             else:
@@ -298,7 +299,17 @@ def score_sender_identity_and_auth(
             else:
                 # Check alignment with sender domain
                 dkim_dom = auth_analysis.dkim.domain
-                if dkim_dom and from_domain and _get_registered_domain(dkim_dom) == from_reg:
+                if live_mode:
+                    aligned_txt = (
+                        " with domain alignment to the From header"
+                        if (dkim_dom and from_domain and _get_registered_domain(dkim_dom) == from_reg)
+                        else ""
+                    )
+                    pos_ev.append(
+                        f"Authentication independently verified by PhishIntel via live DNS ({mechs_str}){aligned_txt} "
+                        f"for From domain ('{from_domain}'). Passing authentication proves control of that domain, not benign intent."
+                    )
+                elif dkim_dom and from_domain and _get_registered_domain(dkim_dom) == from_reg:
                     pos_ev.append(
                         f"Receiver-reported domain authentication passed ({mechs_str}) with verified domain alignment to From header ('{from_domain}'). Note: cannot be independently verified in offline context."
                     )

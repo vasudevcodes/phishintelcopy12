@@ -36,7 +36,37 @@ async def health_check():
         "status": "healthy",
         "service": settings.PROJECT_NAME,
         "phase": "Phase 1 - Forensic Foundation",
+        "online_authentication": settings.ONLINE_AUTH_ENABLED,
     }
+
+
+@app.get(f"{settings.API_V1_STR}/system/status", tags=["System"])
+async def system_status():
+    """Lightweight status used by the UI header badge (lives under /api so the dev proxy forwards it)."""
+    return {"online_authentication": settings.ONLINE_AUTH_ENABLED}
+
+
+@app.get("/health/dns", tags=["System"])
+async def dns_health():
+    """Diagnostic: can this server perform the live DNS lookups needed for SPF/DKIM/DMARC?"""
+    from starlette.concurrency import run_in_threadpool
+
+    from app.services.live_auth_verifier import get_shared_resolver
+
+    def _probe():
+        try:
+            resolver = get_shared_resolver(settings)
+        except Exception as exc:
+            return {"dns_reachable": False, "detail": f"Resolver unavailable (is 'dnspython' installed?): {exc}"}
+        try:
+            txt = resolver.txt("google.com")
+            ok = any(t.lower().startswith("v=spf1") for t in txt)
+            return {"dns_reachable": ok, "detail": "Resolved google.com SPF record." if ok else "DNS answered but no SPF record was returned."}
+        except Exception as exc:
+            return {"dns_reachable": False, "detail": str(exc)}
+
+    result = await run_in_threadpool(_probe)
+    return {"online_auth_enabled": settings.ONLINE_AUTH_ENABLED, **result}
 
 
 @app.get("/", tags=["System"])

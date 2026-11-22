@@ -4,6 +4,7 @@ Validates upload constraints, parses RFC 5322 .eml files, and returns forensic a
 """
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from starlette.concurrency import run_in_threadpool
 from app.core.config import settings
 from app.schemas.email import EmailAnalysisResponse, ErrorResponse
 from app.services.email_parser import parse_email_message
@@ -71,7 +72,9 @@ async def analyze_email(
 
     # 4. Parse forensic data
     try:
-        analysis_result = parse_email_message(file_bytes, filename)
+        # Parsing now performs blocking DNS lookups (live SPF/DKIM/DMARC); run it in a worker
+        # thread so the async event loop stays responsive.
+        analysis_result = await run_in_threadpool(parse_email_message, file_bytes, filename)
         return analysis_result
     except Exception as parse_err:
         raise HTTPException(
